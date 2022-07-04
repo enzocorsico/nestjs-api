@@ -30,6 +30,12 @@ export class UserService {
     });
   }
 
+  findByUsername(username: string) {
+    return User.findOneBy({
+      username: username
+    });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
       let user = await User.findOneBy({
@@ -40,6 +46,20 @@ export class UserService {
       user.firstName = updateUserDto.firstName;
       user.lastName = updateUserDto.lastName;
   
+      return await user.save();
+    } catch (e) {
+      throw new HttpException("Une erreur est survenue lors de la modification", 400);
+    }
+  }
+
+  async updateRefreshToken(id: number, refreshToken: string) {
+    try {
+      let user = await User.findOneBy({
+        id: id
+      });
+
+      user.refreshToken = refreshToken;
+
       return await user.save();
     } catch (e) {
       throw new HttpException("Une erreur est survenue lors de la modification", 400);

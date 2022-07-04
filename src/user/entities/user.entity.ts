@@ -10,9 +10,7 @@ export class User extends BaseEntity {
     })
     username: string;
 
-    @Column({
-        select: false,
-    })
+    @Column()
     password: string;
 
     @Column()
@@ -20,4 +18,7 @@ export class User extends BaseEntity {
 
     @Column()
     firstName: string;
+
+    @Column()
+    refreshToken: string;
 }
