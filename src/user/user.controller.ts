@@ -3,16 +3,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './entities/user.entity';
 
+@ApiTags("User")
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @UseGuards(AuthGuard("jwt"))
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
 
   @UseGuards(AuthGuard("jwt"))
   @Get()
@@ -30,6 +27,15 @@ export class UserController {
   @Get('username/:username')
   findByUsername(@Param('username') username: string) {
     return this.userService.findByUsername(username);
+  }
+
+  @UseGuards(AuthGuard("jwt"))
+  @Post()
+  @ApiCreatedResponse({
+    type: User
+  })
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @UseGuards(AuthGuard("jwt"))
