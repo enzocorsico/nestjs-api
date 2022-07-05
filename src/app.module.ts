@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [".env.local", ".env"]
+      envFilePath: ["./.env.local", "./.env"]
     }),
     TypeOrmModule.forRoot({
       type: "mysql",
